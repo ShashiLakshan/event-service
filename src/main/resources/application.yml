@@ -5,8 +5,8 @@ spring:
     name: event-service
   datasource:
     url: jdbc:h2:mem:eventdb
-    username: root
-    password: root
+    username: sa
+    password:
     driver-class-name: org.h2.Driver
   h2:
     console:

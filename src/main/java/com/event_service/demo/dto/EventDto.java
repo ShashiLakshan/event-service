@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
@@ -13,6 +14,7 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -38,6 +40,9 @@ public class EventDto implements Serializable {
 
     @NotBlank(groups = CreateMarker.class)
     private String eventLocation;
+
+    @NotEmpty(groups = CreateMarker.class)
+    private Set<TicketDto> tickets;
 
     @Override
     public boolean equals(Object o) {

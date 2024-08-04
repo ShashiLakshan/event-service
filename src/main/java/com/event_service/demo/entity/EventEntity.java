@@ -8,6 +8,7 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -31,6 +32,10 @@ public class EventEntity implements Serializable {
 
     private String location;
 
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<TicketEntity> tickets;
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -42,6 +47,11 @@ public class EventEntity implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, date, location);
+    }
+
+    public void setTicketSet(Set<TicketEntity> tickets) {
+        tickets.forEach(ticket -> ticket.setEvent(this));
+        this.tickets = tickets;
     }
 
 }

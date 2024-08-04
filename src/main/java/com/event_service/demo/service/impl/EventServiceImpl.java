@@ -5,6 +5,7 @@ import com.event_service.demo.entity.EventEntity;
 import com.event_service.demo.exception.CustomGlobalException;
 import com.event_service.demo.mapper.EventMapper;
 import com.event_service.demo.repository.EventRepository;
+import com.event_service.demo.repository.TicketRepository;
 import com.event_service.demo.service.EventService;
 import com.event_service.demo.specification.EventSpecification;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 public class EventServiceImpl implements EventService {
 
     private final EventRepository eventRepository;
+    private final TicketRepository ticketRepository;
 
     @Transactional
     @Override

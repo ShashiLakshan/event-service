@@ -2,6 +2,7 @@ package com.event_service.demo.service;
 
 import com.event_service.demo.dto.EventDto;
 import com.event_service.demo.marker_interfaces.CreateMarker;
+import com.event_service.demo.marker_interfaces.UpdateMarker;
 import jakarta.validation.Valid;
 import org.springframework.validation.annotation.Validated;
 
@@ -19,7 +20,8 @@ public interface EventService {
 
     List<EventDto> searchEvents(EventDto eventDto);
 
-    EventDto updateEvent(Integer id, EventDto event);
+    @Validated(UpdateMarker.class)
+    EventDto updateEvent(Integer id, @Valid EventDto event);
 
     void deleteEventById(Integer id);
 }
