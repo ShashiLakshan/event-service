@@ -25,7 +25,7 @@ public class ControllerAdvisor {
     public ResponseEntity<Object> handleCustomGlobalException(CustomGlobalException e, WebRequest request) {
         log.error("Error {}/{}", e.getCode(), e.getMessage());
         StatusResponse statusResponse = StatusResponse.builder().code(e.getCode()).message(e.getMessage()).build();
-        return new ResponseEntity<>(statusResponse, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(statusResponse, e.getHttpStatus());
     }
 
     @ExceptionHandler(Exception.class)

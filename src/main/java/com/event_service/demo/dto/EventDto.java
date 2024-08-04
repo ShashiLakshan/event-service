@@ -1,6 +1,7 @@
 package com.event_service.demo.dto;
 
 import com.event_service.demo.marker_interfaces.CreateMarker;
+import com.event_service.demo.marker_interfaces.UpdateMarker;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonRootName;
@@ -25,6 +26,7 @@ public class EventDto implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
+    @NotBlank(groups = UpdateMarker.class)
     private Integer eventId;
 
     @NotBlank(groups = CreateMarker.class)
