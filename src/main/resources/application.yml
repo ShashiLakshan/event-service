@@ -1,0 +1,13 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: event-service
+  datasource:
+    url: jdbc:h2:mem:eventdb
+    username: root
+    password: root
+    driver-class-name: org.h2.Driver
+  h2:
+    console:
+      enabled: true
