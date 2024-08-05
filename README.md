@@ -84,6 +84,12 @@ sequenceDiagram
     NotificationService-->>BookingService: Acknowledge Booking Cancelled
 ```
 
+Notification for successful booking:
+```
+Payment event consumed: NotificationDto(eventName=Sample Event 12, bookingId=null, eventDate=2024-11-28T12:00, eventLocation=Colombo, userName=Saman, ticketType=VIP, noOfTickets=4, payAmount=400, notificationStatus=BOOKED)
+Event BOOKED
+```
+
 ## REST APIs
 
 ### POST /api/v1/events
