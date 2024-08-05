@@ -37,7 +37,7 @@ public class EventController {
     }
 
     @PostMapping(value = "/search", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<List<EventDto>> searchEvents(@RequestBody EventDto eventDto){
+    public ResponseEntity<List<EventDto>> searchEvents(@RequestBody EventDto eventDto) {
         List<EventDto> events = eventService.searchEvents(eventDto);
         return ResponseEntity.ok(events);
     }

@@ -12,7 +12,8 @@ import java.util.stream.Collectors;
 
 public class EventMapper {
 
-    private EventMapper(){}
+    private EventMapper() {
+    }
 
     public static EventDto toDto(EventEntity entity) {
         return EventDto.builder()

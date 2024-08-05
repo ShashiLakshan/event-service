@@ -1,8 +1,8 @@
 package com.event_booking.demo.service;
 
+import com.event_booking.demo.dto.EventDto;
 import com.event_booking.demo.marker_interfaces.CreateMarker;
 import com.event_booking.demo.marker_interfaces.UpdateMarker;
-import com.event_booking.demo.dto.EventDto;
 import jakarta.validation.Valid;
 import org.springframework.validation.annotation.Validated;
 

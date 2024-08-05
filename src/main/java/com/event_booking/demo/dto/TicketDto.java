@@ -1,7 +1,7 @@
 package com.event_booking.demo.dto;
 
-import com.event_booking.demo.marker_interfaces.CreateMarker;
 import com.event_booking.demo.enums.TicketType;
+import com.event_booking.demo.marker_interfaces.CreateMarker;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
