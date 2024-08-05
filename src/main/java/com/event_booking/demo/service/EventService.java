@@ -21,7 +21,7 @@ public interface EventService {
     List<EventDto> searchEvents(EventDto eventDto);
 
     @Validated(UpdateMarker.class)
-    EventDto updateEvent(Integer id, @Valid EventDto event);
+    EventDto updateEvent(@Valid EventDto event);
 
     void deleteEventById(Integer id);
 }

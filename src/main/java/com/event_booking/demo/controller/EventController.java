@@ -42,9 +42,9 @@ public class EventController {
         return ResponseEntity.ok(events);
     }
 
-    @PatchMapping(value = "/{id}", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<EventDto> updateEvent(@PathVariable Integer id, @RequestBody @Valid EventDto event) {
-        EventDto response = eventService.updateEvent(id, event);
+    @PatchMapping(consumes = "application/json", produces = "application/json")
+    public ResponseEntity<EventDto> updateEvent(@RequestBody @Valid EventDto event) {
+        EventDto response = eventService.updateEvent(event);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 

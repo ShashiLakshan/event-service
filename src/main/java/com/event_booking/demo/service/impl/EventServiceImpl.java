@@ -52,9 +52,9 @@ public class EventServiceImpl implements EventService {
 
     @Override
     @Transactional
-    public EventDto updateEvent(Integer id, EventDto eventDto) {
+    public EventDto updateEvent(EventDto eventDto) {
 
-        EventEntity eventEntity = eventRepository.findById(id)
+        EventEntity eventEntity = eventRepository.findById(eventDto.getEventId())
                 .orElseThrow(() -> new CustomGlobalException("EVENT_NOT_FOUND", "Event not found", HttpStatus.NOT_FOUND));
 
         EventMapper.toUpdateEntity(eventDto, eventEntity);

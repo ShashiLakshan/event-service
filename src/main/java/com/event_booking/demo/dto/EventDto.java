@@ -28,7 +28,7 @@ public class EventDto implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @NotBlank(groups = UpdateMarker.class)
+    @NotNull(groups = UpdateMarker.class)
     private Integer eventId;
 
     @NotBlank(groups = CreateMarker.class)

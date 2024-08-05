@@ -95,7 +95,7 @@ public class EventServiceImplTest {
     public void whenUpdateEventForNonExistingEvent_thenThrowException() {
         when(eventRepository.findById(eventDto.getEventId())).thenReturn(Optional.empty());
 
-        CustomGlobalException exception = assertThrows(CustomGlobalException.class, () -> eventService.updateEvent(eventDto.getEventId(), eventDto));
+        CustomGlobalException exception = assertThrows(CustomGlobalException.class, () -> eventService.updateEvent(eventDto));
         assertEquals("EVENT_NOT_FOUND", exception.getCode());
     }
 
