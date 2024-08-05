@@ -19,8 +19,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Set;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -115,6 +117,63 @@ public class EventControllerIntegrationTest {
                 .andExpect(jsonPath("$.eventName").value("Test_Event"))
                 .andExpect(jsonPath("$.eventDate").value(dateTimeString))
                 .andExpect(jsonPath("$.eventLocation").value("Colombo"))
+                .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Order(4)
+    @Test
+    public void whenSearchEvents_thenReturnMatchingEvents() throws Exception {
+        mockMvc.perform(post("/api/v1/events")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(eventDto)))
+                .andExpect(status().isCreated());
+
+        mockMvc.perform(post("/api/v1/events/search")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(eventDto)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].eventName").value("Test_Event"))
+                .andExpect(jsonPath("$[0].eventDate").value(dateTimeString))
+                .andExpect(jsonPath("$[0].eventLocation").value("Colombo"))
+                .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Order(5)
+    @Test
+    public void whenUpdateEvent_thenEventShouldBeUpdated() throws Exception {
+        String responseContent = mockMvc.perform(post("/api/v1/events")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(eventDto)))
+                .andExpect(status().isCreated())
+                .andReturn().getResponse().getContentAsString();
+
+        EventDto createEventDto = objectMapper.readValue(responseContent, EventDto.class);
+
+        createEventDto.setEventName("Updated_Test_Event");
+        mockMvc.perform(patch("/api/v1/events")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(createEventDto)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.eventName").value("Updated_Test_Event"))
+                .andExpect(jsonPath("$.eventDate").value(dateTimeString))
+                .andExpect(jsonPath("$.eventLocation").value("Colombo"))
+                .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Order(6)
+    @Test
+    public void whenDeleteEventById_thenEventShouldBeDeleted() throws Exception {
+        String responseContent = mockMvc.perform(post("/api/v1/events")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(eventDto)))
+                .andExpect(status().isCreated())
+                .andReturn().getResponse().getContentAsString();
+
+        EventDto createEventDto = objectMapper.readValue(responseContent, EventDto.class);
+
+        mockMvc.perform(delete("/api/v1/events/{id}", createEventDto.getEventId())
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
                 .andDo(MockMvcResultHandlers.print());
     }
 

@@ -92,11 +92,50 @@ public class EventServiceImplTest {
     }
 
     @Test
+    public void whenEventsArePresent_thenReturnEvents() {
+        List<EventEntity> eventEntities = List.of(eventEntity);
+        when(eventRepository.findAll()).thenReturn(eventEntities);
+
+        List<EventDto> events = eventService.getAllEvents();
+        assertFalse(events.isEmpty());
+        assertEquals(eventEntities.size(), events.size());
+    }
+
+    @Test
+    public void whenEventByIdIsFound_thenReturnEvent() {
+        when(eventRepository.findById(eventDto.getEventId())).thenReturn(Optional.of(eventEntity));
+
+        EventDto foundEvent = eventService.getEventById(eventDto.getEventId());
+        assertNotNull(foundEvent);
+        assertEquals(eventDto.getEventName(), foundEvent.getEventName());
+        assertEquals(eventDto.getEventDate(), foundEvent.getEventDate());
+        assertEquals(eventDto.getEventLocation(), foundEvent.getEventLocation());
+    }
+
+    @Test
     public void whenUpdateEventForNonExistingEvent_thenThrowException() {
         when(eventRepository.findById(eventDto.getEventId())).thenReturn(Optional.empty());
 
         CustomGlobalException exception = assertThrows(CustomGlobalException.class, () -> eventService.updateEvent(eventDto));
         assertEquals("EVENT_NOT_FOUND", exception.getCode());
+    }
+
+    @Test
+    public void whenUpdateEvent_thenEventIsUpdated() {
+        when(eventRepository.findById(eventDto.getEventId())).thenReturn(Optional.of(eventEntity));
+        when(eventRepository.save(any(EventEntity.class))).thenReturn(eventEntity);
+
+        EventDto updatedEvent = eventService.updateEvent(eventDto);
+        verify(eventRepository).save(eventEntityArgumentCaptor.capture());
+        EventEntity capturedEventEntity = eventEntityArgumentCaptor.getValue();
+
+        assertEquals(eventDto.getEventName(), capturedEventEntity.getName());
+        assertEquals(eventDto.getEventDate(), capturedEventEntity.getDate());
+        assertEquals(eventDto.getEventLocation(), capturedEventEntity.getLocation());
+
+        assertEquals(eventDto.getEventName(), updatedEvent.getEventName());
+        assertEquals(eventDto.getEventDate(), updatedEvent.getEventDate());
+        assertEquals(eventDto.getEventLocation(), updatedEvent.getEventLocation());
     }
 
     @Test
