@@ -14,7 +14,6 @@ public class JacksonConfiguration {
     @Primary
     public ObjectMapper objectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.setPropertyNamingStrategy(PropertyNamingStrategies.UPPER_CAMEL_CASE);
         objectMapper.registerModule(new JavaTimeModule());
         return objectMapper;
     }
