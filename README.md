@@ -6,6 +6,8 @@ Event can be saved with Event Name, Event Data, Event Location and with Tickets 
 
 Swagger URL: http://localhost:8081/swagger-ui/index.html
 
+Postman Collection: https://github.com/ShashiLakshan/event-service/blob/main/postman/event-booking.postman_collection.json
+
 ## Prerequisites
 
 - Java 22 or later
