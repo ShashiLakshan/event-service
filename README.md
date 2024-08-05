@@ -8,9 +8,7 @@ Other related microservices:
 * Payment Microservice
 * Notification Microservice
 
-
 Swagger URL: http://localhost:8081/swagger-ui/index.html
-
 Postman Collection: https://github.com/ShashiLakshan/event-service/blob/main/postman/event-booking.postman_collection.json
 
 ## Prerequisites
@@ -45,6 +43,46 @@ mvn spring-boot:run
 ```
 The application will start and be accessible at http://localhost:8081.
 
+
+This system allows users to create events, book tickets for events, and handle payments. The booking process includes ticket availability checks, payment processing, and notifications for successful bookings and cancellations.
+
+## Sequence Diagram
+
+```mermaid
+sequenceDiagram
+    actor User
+    participant EventService
+    participant BookingService
+    participant PaymentService
+    participant NotificationService
+
+    User->>EventService: Create Event
+    EventService-->>User: Event Created
+
+    User->>BookingService: Create Booking
+    BookingService->>EventService: Check Event Availability
+    EventService-->>BookingService: Event Available
+    alt Tickets Available
+        BookingService-->>User: Booking Created
+        BookingService->>PaymentService: Process Payment
+        alt Payment Amount Matches
+            PaymentService-->>BookingService: Payment Success
+            BookingService->>NotificationService: Trigger Kafka Event (Booking Success)
+            NotificationService-->>BookingService: Acknowledge Booking Success
+            BookingService-->>User: Booking Confirmed
+        else Payment Amount Mismatch
+            PaymentService-->>BookingService: Payment Amount Not Matching
+            BookingService-->>User: Bad Request
+        end
+    else Tickets Not Available
+        BookingService-->>User: Tickets Not Available Error
+    end
+
+    User->>BookingService: Cancel Booking
+    BookingService-->>User: Booking Cancelled
+    BookingService->>NotificationService: Trigger Kafka Event (Booking Cancelled)
+    NotificationService-->>BookingService: Acknowledge Booking Cancelled
+```
 
 ## REST APIs
 
