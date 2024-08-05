@@ -3,6 +3,11 @@
 This is a Spring Boot 3.3.2 application that uses H2 as its database.
 Event can be saved with Event Name, Event Data, Event Location and with Tickets Details.
 
+Other related microservices: 
+* Booking Microservice
+* Payment Microservice
+* Notification Microservice
+
 
 Swagger URL: http://localhost:8081/swagger-ui/index.html
 
